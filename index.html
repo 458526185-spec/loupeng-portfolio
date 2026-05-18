@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>楼鹏 · 设计作品集</title>
+<style>
+/* ═══════════════════════════════════════
+   Design System · 生动现代风 Vibrant Modern
+═══════════════════════════════════════ */
+:root {
+  --bg:       #0a0a0f;
+  --bg-card:  #12121a;
+  --bg-light: #1a1a2e;
+  --surface:  #16213e;
+  --cyan:     #4cc9f0;
+  --magenta:  #b5179e;
+  --purple:   #7209b7;
+  --gold:     #f72585;
+  --white:    #f0f0f5;
+  --gray:     #8888aa;
+  --radius:   16px;
+  --ease:     cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  font-family: 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', sans-serif;
+  background: var(--bg);
+  color: var(--white);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* 动态网格背景 */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    linear-gradient(rgba(76,201,240,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(76,201,240,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ════════════════════════════════════
+   自定义滚动条
+════════════════════════════════════ */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 3px; }
+
+/* ════════════════════════════════════
+   导航栏
+════════════════════════════════════ */
+header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 72px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 3rem;
+  background: rgba(10,10,15,0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(76,201,240,0.1);
+  transition: all 0.4s var(--ease);
+}
+
+header.scrolled {
+  background: rgba(10,10,15,0.95);
+  box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+}
+
+.logo {
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, var(--cyan), var(--magenta));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gray);
+  transition: color 0.3s, transform 0.3s;
+  position: relative;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--cyan);
+  transition: width 0.3s var(--ease);
+}
+
+.nav-links a:hover { color: var(--cyan); }
+.nav-links a:hover::after { width: 100%; }
+
+/* ════════════════════════════════════
+   Hero 区域
+════════════════════════════════════ */
+#hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 2rem;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(114,9,183,0.25) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 50%, rgba(76,201,240,0.2) 0%, transparent 60%),
+    radial-gradient(ellipse at 50% 100%, rgba(181,23,158,0.15) 0%, transparent 50%);
+  z-index: 1;
+}
+
+/* 浮动粒子 */
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: floatParticle linear infinite;
+}
+
+@keyframes floatParticle {
+  0%   { transform: translateY(0) scale(1); opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateY(-100vh) scale(0); opacity: 0; }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 900px;
+}
+
+.hero-tag {
+  display: inline-block;
+  padding: 0.4rem 1.2rem;
+  border: 1px solid rgba(76,201,240,0.3);
+  border-radius: 50px;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 2rem;
+  animation: fadeUp 0.8s var(--ease) both;
+}
+
+.hero-title {
+  font-size: clamp(2.8rem, 7vw, 5.5rem);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  margin-bottom: 1.5rem;
+  animation: fadeUp 0.8s 0.15s var(--ease) both;
+}
+
+.hero-title .gradient-text {
+  background: linear-gradient(135deg, var(--cyan) 0%, var(--magenta) 50%, var(--gold) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  color: var(--gray);
+  font-weight: 300;
+  line-height: 1.7;
+  max-width: 650px;
+  margin: 0 auto 2.5rem;
+  animation: fadeUp 0.8s 0.3s var(--ease) both;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.9rem 2.2rem;
+  background: linear-gradient(135deg, var(--cyan), var(--purple));
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  animation: fadeUp 0.8s 0.45s var(--ease) both;
+  text-decoration: none;
+}
+
+.hero-cta:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 32px rgba(76,201,240,0.3);
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* 滚动提示 */
+.scroll-hint {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 2;
+  animation: bounce 2.5s ease-in-out infinite;
+}
+
+.scroll-hint span {
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+
+.scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--cyan), transparent);
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(8px); }
+}
+
+/* ════════════════════════════════════
+   通用区块样式
+════════════════════════════════════ */
+.section {
+  position: relative;
+  z-index: 1;
+  padding: 7rem 3rem;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.section-tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.section-title .highlight {
+  background: linear-gradient(135deg, var(--cyan), var(--magenta));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ════════════════════════════════════
+   关于区域
+════════════════════════════════════ */
+#about {
+  background: linear-gradient(180deg, var(--bg) 0%, var(--bg-light) 100%);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: center;
+}
+
+.about-visual {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.about-avatar {
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--purple), var(--magenta), var(--cyan));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.about-avatar::before {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: var(--bg-light);
+  z-index: 1;
+}
+
+.about-avatar span {
+  position: relative;
+  z-index: 2;
+}
+
+/* 装饰环 */
+.about-avatar::after {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 1px solid rgba(76,201,240,0.3);
+  animation: spin 12s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.about-text h3 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: var(--white);
+}
+
+.about-text p {
+  color: var(--gray);
+  line-height: 2;
+  margin-bottom: 1.2rem;
+  font-size: 0.95rem;
+}
+
+.about-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 2rem;
+}
+
+.tool-tag {
+  padding: 0.4rem 1rem;
+  border: 1px solid rgba(76,201,240,0.2);
+  border-radius: 50px;
+  font-size: 0.75rem;
+  color: var(--cyan);
+  letter-spacing: 0.05em;
+  transition: all 0.3s;
+}
+
+.tool-tag:hover {
+  background: rgba(76,201,240,0.1);
+  border-color: var(--cyan);
+}
+
+/* ════════════════════════════════════
+   作品网格
+════════════════════════════════════ */
+#works {
+  background: var(--bg-light);
+}
+
+.works-filter {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 0.5rem 1.5rem;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 50px;
+  background: transparent;
+  color: var(--gray);
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: inherit;
+}
+
+.filter-btn.active,
+.filter-btn:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+  background: rgba(76,201,240,0.08);
+}
+
+.works-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.work-card {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--bg-card);
+  border: 1px solid rgba(255,255,255,0.06);
+  transition: transform 0.5s var(--ease), box-shadow 0.5s;
+  cursor: pointer;
+  group: true;
+}
+
+.work-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 20px 60px rgba(76,201,240,0.15);
+  border-color: rgba(76,201,240,0.3);
+}
+
+.work-card-img {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+}
+
+.work-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--ease);
+}
+
+.work-card:hover .work-card-img img {
+  transform: scale(1.08);
+}
+
+/* 卡片悬浮覆盖层 */
+.work-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10,10,15,0.9) 0%, transparent 60%);
+  display: flex;
+  align-items: flex-end;
+  padding: 1.5rem;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.work-card:hover .work-card-overlay { opacity: 1; }
+
+.work-card-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--white);
+}
+
+.work-card-category {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  padding: 0.25rem 0.8rem;
+  border-radius: 50px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: rgba(76,201,240,0.15);
+  color: var(--cyan);
+  backdrop-filter: blur(10px);
+}
+
+/* ════════════════════════════════════
+   视频区域
+════════════════════════════════════ */
+#videos {
+  background: var(--bg);
+}
+
+.videos-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.video-card {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--bg-card);
+  border: 1px solid rgba(255,255,255,0.06);
+  transition: transform 0.5s var(--ease), box-shadow 0.5s;
+}
+
+.video-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 50px rgba(181,23,158,0.15);
+}
+
+.video-wrapper {
+  position: relative;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+}
+
+.video-wrapper video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video-info {
+  padding: 1.2rem 1.5rem;
+}
+
+.video-info h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+.video-info p {
+  font-size: 0.8rem;
+  color: var(--gray);
+}
+
+/* 播放按钮覆盖 */
+.play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(76,201,240,0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s, background 0.3s;
+  cursor: pointer;
+  border: none;
+}
+
+.play-btn:hover {
+  transform: translate(-50%, -50%) scale(1.1);
+  background: var(--cyan);
+}
+
+.play-btn::after {
+  content: '';
+  width: 0;
+  height: 0;
+  border-left: 18px solid #fff;
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
+  margin-left: 4px;
+}
+
+/* ════════════════════════════════════
+   联系区域
+════════════════════════════════════ */
+#contact {
+  background: linear-gradient(180deg, var(--bg-light) 0%, var(--bg) 100%);
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.contact-info h3 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.contact-info p {
+  color: var(--gray);
+  line-height: 1.9;
+  margin-bottom: 2rem;
+}
+
+.contact-items {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  transition: border-color 0.3s, background 0.3s;
+}
+
+.contact-item:hover {
+  border-color: rgba(76,201,240,0.3);
+  background: rgba(76,201,240,0.05);
+}
+
+.contact-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--purple), var(--cyan));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.contact-item-detail h4 {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: 0.2rem;
+}
+
+.contact-item-detail p {
+  font-size: 0.95rem;
+  color: var(--white);
+  margin: 0;
+}
+
+/* 联系表单 */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 0.9rem 1.2rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.03);
+  color: var(--white);
+  font-size: 0.9rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.3s;
+  resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: var(--cyan);
+}
+
+.form-submit {
+  align-self: flex-start;
+  padding: 0.9rem 2.5rem;
+  border-radius: 50px;
+  border: none;
+  background: linear-gradient(135deg, var(--cyan), var(--purple));
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  font-family: inherit;
+}
+
+.form-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(76,201,240,0.3);
+}
+
+/* ════════════════════════════════════
+   页脚
+════════════════════════════════════ */
+footer {
+  position: relative;
+  z-index: 1;
+  padding: 3rem;
+  text-align: center;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.footer-logo {
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, var(--cyan), var(--magenta));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1rem;
+}
+
+.footer-copy {
+  font-size: 0.75rem;
+  color: var(--gray);
+  letter-spacing: 0.05em;
+}
+
+/* ════════════════════════════════════
+   灯箱
+════════════════════════════════════ */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0,0,0,0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s;
+  cursor: pointer;
+}
+
+.lightbox.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.lightbox img,
+.lightbox video {
+  max-width: 90vw;
+  max-height: 90vh;
+  border-radius: 8px;
+  box-shadow: 0 20px 80px rgba(0,0,0,0.5);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+}
+
+.lightbox-close:hover { background: rgba(255,255,255,0.2); }
+
+/* ════════════════════════════════════
+   滚动入场动画
+════════════════════════════════════ */
+.fade-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+}
+
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ════════════════════════════════════
+   响应式
+════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .works-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  header { padding: 0 1.5rem; }
+  .nav-links { gap: 1.2rem; }
+  .nav-links a { font-size: 0.7rem; }
+  .section { padding: 5rem 1.5rem; }
+  .about-grid { grid-template-columns: 1fr; text-align: center; }
+  .about-visual { order: -1; }
+  .about-avatar { width: 200px; height: 200px; font-size: 3rem; }
+  .about-tools { justify-content: center; }
+  .works-grid { grid-template-columns: 1fr; }
+  .videos-grid { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════
+     导航栏
+════════════════════════════════════ -->
+<header id="header">
+  <a href="#hero" class="logo">LOUPENG</a>
+  <ul class="nav-links">
+    <li><a href="#works">作品</a></li>
+    <li><a href="#about">关于</a></li>
+    <li><a href="#contact">联系</a></li>
+  </ul>
+</header>
+
+<!-- ════════════════════════════════════
+     Hero
+════════════════════════════════════ -->
+<section id="hero">
+  <div class="hero-bg" id="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-tag">消费电子 · 智能家居 · 视觉设计</div>
+    <h1 class="hero-title">
+      用视觉传递<br><span class="gradient-text">产品价值</span>
+    </h1>
+    <p class="hero-subtitle">
+      专注于消费电子与智能家居领域的设计师，擅长从用户需求与商业卖点出发，打造兼具视觉吸引力与实用性的设计方案
+    </p>
+    <a href="#works" class="hero-cta">查看作品 ↓</a>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     关于我
+════════════════════════════════════ -->
+<section id="about">
+  <div class="section-header fade-up">
+    <div class="section-tag">About Me</div>
+    <h2 class="section-title">关于 <span class="highlight">我</span></h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-visual fade-up">
+      <div class="about-avatar">
+        <span>🎨</span>
+      </div>
+    </div>
+    <div class="about-text fade-up">
+      <h3>楼鹏</h3>
+      <p>
+        我是一名专注于消费电子与智能家居领域的设计师，擅长从用户需求与商业卖点出发，打造兼具视觉吸引力与实用性的设计方案。
+      </p>
+      <p>
+        设计理念：用可视化的方式传递产品价值，让商业设计既好看，又能解决实际问题。
+      </p>
+      <div class="about-tools">
+        <span class="tool-tag">Blender</span>
+        <span class="tool-tag">Plasticity</span>
+        <span class="tool-tag">Photoshop</span>
+        <span class="tool-tag">Illustrator</span>
+        <span class="tool-tag">Premiere</span>
+        <span class="tool-tag">After Effects</span>
+        <span class="tool-tag">CorelDRAW</span>
+        <span class="tool-tag">AI Tools</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     作品·包装设计
+════════════════════════════════════ -->
+<section id="works">
+  <div class="section-header fade-up">
+    <div class="section-tag">Portfolio</div>
+    <h2 class="section-title">精选 <span class="highlight">作品</span></h2>
+  </div>
+
+  <div class="works-filter fade-up">
+    <button class="filter-btn active" data-filter="all">全部</button>
+    <button class="filter-btn" data-filter="package">包装设计</button>
+    <button class="filter-btn" data-filter="image">平面出品</button>
+    <button class="filter-btn" data-filter="amazon">亚马逊</button>
+  </div>
+
+  <div class="works-grid" id="works-grid">
+    <!-- 包装设计 -->
+    <div class="work-card fade-up" data-category="package" onclick="openLightbox('包装/产品包装1.png')">
+      <div class="work-card-img">
+        <img src="包装/产品包装1.png" alt="产品包装1" loading="lazy">
+        <div class="work-card-overlay"><span class="work-card-label">产品包装设计 1</span></div>
+        <span class="work-card-category">包装</span>
+      </div>
+    </div>
+    <div class="work-card fade-up" data-category="package" onclick="openLightbox('包装/产品包装2.png')">
+      <div class="work-card-img">
+        <img src="包装/产品包装2.png" alt="产品包装2" loading="lazy">
+        <div class="work-card-overlay"><span class="work-card-label">产品包装设计 2</span></div>
+        <span class="work-card-category">包装</span>
+      </div>
+    </div>
+    <div class="work-card fade-up" data-category="package" onclick="openLightbox('包装/颜料包装效果图1.png')">
+      <div class="work-card-img">
+        <img src="包装/颜料包装效果图1.png" alt="颜料包装效果图1" loading="lazy">
+        <div class="work-card-overlay"><span class="work-card-label">颜料包装效果图 1</span></div>
+        <span class="work-card-category">包装</span>
+      </div>
+    </div>
+    <div class="work-card fade-up" data-category="package" onclick="openLightbox('包装/颜料包装效果图2.png')">
+      <div class="work-card-img">
+        <img src="包装/颜料包装效果图2.png" alt="颜料包装效果图2" loading="lazy">
+        <div class="work-card-overlay"><span class="work-card-label">颜料包装效果图 2</span></div>
+        <span class="work-card-category">包装</span>
+      </div>
+    </div>
+
+    <!-- 图片产出 -->
+    <div class="work-card fade-up" data-category="image" onclick="openLightbox('图片产出/EchoTag.png')">
+      <div class="work-card-img">
+        <img src="图片产出/EchoTag.png" alt="EchoTag" loading="lazy">
+        <div class="work-card-overlay"><span class="work-card-label">EchoTag</span></div>
+        <span class="work-card-category">平面</span>
+      </div>
+    </div>
+    <div class="work-card fade-up" data-category="image" onclick="openLightbox('图片产出/手册1.png')">
+      <div class="work-card-img">
+        <img src="图片产出/手册1.png" alt="手册1" loading="lazy">
+        <div class="work-card-overlay"><span class="work-card-label">产品手册 1</span></div>
+        <span class="work-card-category">平面</span>
+      </div>
+    </div>
+    <div class="work-card fade-up" data-category="image" onclick="openLightbox('图片产出/手册2.png')">
+      <div class="work-card-img">
+        <img src="图片产出/手册2.png" alt="手册2" loading="lazy">
+        <div class="work-card-overlay"><span class="work-card-label">产品手册 2</span></div>
+        <span class="work-card-category">平面</span>
+      </div>
+    </div>
+    <div class="work-card fade-up" data-category="image" onclick="openLightbox('图片产出/展会海报.png')">
+      <div class="work-card-img">
+        <img src="图片产出/展会海报.png" alt="展会海报" loading="lazy">
+        <div class="work-card-overlay"><span class="work-card-label">展会海报</span></div>
+        <span class="work-card-category">平面</span>
+      </div>
+    </div>
+    <div class="work-card fade-up" data-category="image" onclick="openLightbox('图片产出/校招海报.jpg')">
+      <div class="work-card-img">
+        <img src="图片产出/校招海报.jpg" alt="校招海报" loading="lazy">
+        <div class="work-card-overlay"><span class="work-card-label">校招海报</span></div>
+        <span class="work-card-category">平面</span>
+      </div>
+    </div>
+    <div class="work-card fade-up" data-category="image" onclick="openLightbox('图片产出/宣贯海报.png')">
+      <div class="work-card-img">
+        <img src="图片产出/宣贯海报.png" alt="宣贯海报" loading="lazy">
+        <div class="work-card-overlay"><span class="work-card-label">宣贯海报</span></div>
+        <span class="work-card-category">平面</span>
+      </div>
+    </div>
+    <div class="work-card fade-up" data-category="image" onclick="openLightbox('图片产出/涂鸦小程序.png')">
+      <div class="work-card-img">
+        <img src="图片产出/涂鸦小程序.png" alt="涂鸦小程序" loading="lazy">
+        <div class="work-card-overlay"><span class="work-card-label">涂鸦小程序</span></div>
+        <span class="work-card-category">平面</span>
+      </div>
+    </div>
+
+    <!-- 亚马逊 -->
+    <div class="work-card fade-up" data-category="amazon" onclick="openLightbox('亚马逊/案列 (1).jpg')">
+      <div class="work-card-img">
+        <img src="亚马逊/案列 (1).jpg" alt="亚马逊案列1" loading="lazy">
+        <div class="work-card-overlay"><span class="work-card-label">亚马逊主图 1</span></div>
+        <span class="work-card-category">亚马逊</span>
+      </div>
+    </div>
+    <div class="work-card fade-up" data-category="amazon" onclick="openLightbox('亚马逊/案列 (5).jpg')">
+      <div class="work-card-img">
+        <img src="亚马逊/案列 (5).jpg" alt="亚马逊案列5" loading="lazy">
+        <div class="work-card-overlay"><span class="work-card-label">亚马逊主图 5</span></div>
+        <span class="work-card-category">亚马逊</span>
+      </div>
+    </div>
+    <div class="work-card fade-up" data-category="amazon" onclick="openLightbox('亚马逊/案列 (10).jpg')">
+      <div class="work-card-img">
+        <img src="亚马逊/案列 (10).jpg" alt="亚马逊案列10" loading="lazy">
+        <div class="work-card-overlay"><span class="work-card-label">亚马逊主图 10</span></div>
+        <span class="work-card-category">亚马逊</span>
+      </div>
+    </div>
+    <div class="work-card fade-up" data-category="amazon" onclick="openLightbox('亚马逊/案列 (15).jpg')">
+      <div class="work-card-img">
+        <img src="亚马逊/案列 (15).jpg" alt="亚马逊案列15" loading="lazy">
+        <div class="work-card-overlay"><span class="work-card-label">亚马逊主图 15</span></div>
+        <span class="work-card-category">亚马逊</span>
+      </div>
+    </div>
+    <div class="work-card fade-up" data-category="amazon" onclick="openLightbox('亚马逊/案列 (20).jpg')">
+      <div class="work-card-img">
+        <img src="亚马逊/案列 (20).jpg" alt="亚马逊案列20" loading="lazy">
+        <div class="work-card-overlay"><span class="work-card-label">亚马逊主图 20</span></div>
+        <span class="work-card-category">亚马逊</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     视频作品
+════════════════════════════════════ -->
+<section id="videos">
+  <div class="section-header fade-up">
+    <div class="section-tag">Video Works</div>
+    <h2 class="section-title">视频 <span class="highlight">渲染</span></h2>
+  </div>
+  <div class="videos-grid">
+    <div class="video-card fade-up">
+      <div class="video-wrapper">
+        <video src="视频/产品渲染剪辑1.mp4" muted loop playsinline preload="metadata"></video>
+        <button class="play-btn" onclick="toggleVideo(this)"></button>
+      </div>
+      <div class="video-info">
+        <h4>产品渲染剪辑 1</h4>
+        <p>消费电子产品三维渲染展示</p>
+      </div>
+    </div>
+    <div class="video-card fade-up">
+      <div class="video-wrapper">
+        <video src="视频/产品渲染剪辑2.mp4" muted loop playsinline preload="metadata"></video>
+        <button class="play-btn" onclick="toggleVideo(this)"></button>
+      </div>
+      <div class="video-info">
+        <h4>产品渲染剪辑 2</h4>
+        <p>智能家居产品动画演示</p>
+      </div>
+    </div>
+    <div class="video-card fade-up">
+      <div class="video-wrapper">
+        <video src="视频/产品渲染剪辑3.mp4" muted loop playsinline preload="metadata"></video>
+        <button class="play-btn" onclick="toggleVideo(this)"></button>
+      </div>
+      <div class="video-info">
+        <h4>产品渲染剪辑 3</h4>
+        <p>产品细节与材质展示</p>
+      </div>
+    </div>
+    <div class="video-card fade-up">
+      <div class="video-wrapper">
+        <video src="视频/产品渲染剪辑4.mp4" muted loop playsinline preload="metadata"></video>
+        <button class="play-btn" onclick="toggleVideo(this)"></button>
+      </div>
+      <div class="video-info">
+        <h4>产品渲染剪辑 4</h4>
+        <p>完整产品宣传动画</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     联系我
+════════════════════════════════════ -->
+<section id="contact">
+  <div class="section-header fade-up">
+    <div class="section-tag">Contact</div>
+    <h2 class="section-title">联系 <span class="highlight">我</span></h2>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-info fade-up">
+      <h3>期待与您合作</h3>
+      <p>
+        无论是产品建模渲染、电商视觉设计，还是视频剪辑动画，我都能为您提供专业的设计方案。
+      </p>
+      <div class="contact-items">
+        <div class="contact-item">
+          <div class="contact-icon">📱</div>
+          <div class="contact-item-detail">
+            <h4>手机 / 微信</h4>
+            <p>18768010586</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">✉️</div>
+          <div class="contact-item-detail">
+            <h4>邮箱</h4>
+            <p>458526185@qq.com</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div class="contact-item-detail">
+            <h4>领域</h4>
+            <p>消费电子 · 智能家居 · 视觉设计</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-form fade-up">
+      <div class="form-group">
+        <label>您的姓名</label>
+        <input type="text" placeholder="请输入您的姓名">
+      </div>
+      <div class="form-group">
+        <label>邮箱地址</label>
+        <input type="email" placeholder="请输入邮箱地址">
+      </div>
+      <div class="form-group">
+        <label>项目描述</label>
+        <textarea rows="5" placeholder="请描述您的项目需求..."></textarea>
+      </div>
+      <button class="form-submit">发送留言 →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════
+     页脚
+════════════════════════════════════ -->
+<footer>
+  <div class="footer-logo">LOUPENG</div>
+  <p class="footer-copy">© 2024 楼鹏 · 保留所有权利</p>
+</footer>
+
+<!-- ════════════════════════════════════
+     灯箱
+════════════════════════════════════ -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <img id="lightbox-img" src="" alt="lightbox">
+</div>
+
+<script>
+/* ════════════════════════════════════
+   Hero 动态粒子背景
+════════════════════════════════════ */
+(function initHeroBg() {
+  const container = document.getElementById('hero-bg');
+  const colors = ['rgba(76,201,240,0.6)', 'rgba(181,23,158,0.5)', 'rgba(114,9,183,0.4)', 'rgba(247,37,133,0.4)'];
+  for (let i = 0; i < 25; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = Math.random() * 4 + 2;
+    p.style.cssText = `
+      width: ${size}px; height: ${size}px;
+      left: ${Math.random()*100}%;
+      bottom: -${size}px;
+      background: ${colors[Math.floor(Math.random()*colors.length)]};
+      animation-duration: ${Math.random()*12+8}s;
+      animation-delay: ${Math.random()*6}s;
+    `;
+    container.appendChild(p);
+  }
+})();
+
+/* ════════════════════════════════════
+   导航滚动效果
+════════════════════════════════════ */
+const header = document.getElementById('header');
+window.addEventListener('scroll', () => {
+  header.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+/* ════════════════════════════════════
+   滚动入场动画 · IntersectionObserver
+════════════════════════════════════ */
+const fadeEls = document.querySelectorAll('.fade-up');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.15 });
+fadeEls.forEach(el => io.observe(el));
+
+/* ════════════════════════════════════
+   作品筛选
+════════════════════════════════════ */
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter = btn.dataset.filter;
+    document.querySelectorAll('.work-card').forEach(card => {
+      if (filter === 'all' || card.dataset.category === filter) {
+        card.style.display = '';
+        card.style.animation = 'fadeUp 0.5s ease both';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  });
+});
+
+/* ════════════════════════════════════
+   视频播放切换
+════════════════════════════════════ */
+function toggleVideo(btn) {
+  const video = btn.parentElement.querySelector('video');
+  if (video.paused) {
+    document.querySelectorAll('.video-wrapper video').forEach(v => { v.pause(); v.parentElement.querySelector('.play-btn').style.display = 'flex'; });
+    video.play();
+    btn.style.display = 'none';
+    video.onended = () => { btn.style.display = 'flex'; };
+  } else {
+    video.pause();
+    btn.style.display = 'flex';
+  }
+}
+
+/* 点击视频暂停/播放 */
+document.querySelectorAll('.video-wrapper video').forEach(video => {
+  video.addEventListener('click', function(e) {
+    e.stopPropagation();
+    const btn = this.parentElement.querySelector('.play-btn');
+    if (this.paused) {
+      this.play();
+      btn.style.display = 'none';
+    } else {
+      this.pause();
+      btn.style.display = 'flex';
+    }
+  });
+});
+
+/* ════════════════════════════════════
+   灯箱
+════════════════════════════════════ */
+function openLightbox(src) {
+  const lb = document.getElementById('lightbox');
+  document.getElementById('lightbox-img').src = src;
+  lb.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  const lb = document.getElementById('lightbox');
+  lb.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeLightbox();
+});
+
+/* ════════════════════════════════════
+   导航平滑滚动
+════════════════════════════════════ */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+</script>
+</body>
+</html>
