@@ -62,15 +62,15 @@ a { color: inherit; text-decoration: none; }
 /* ════════════════════════════════════
    导航栏
 ════════════════════════════════════ */
-header {
+nav {
   position: fixed;
   top: 0; left: 0; right: 0;
   height: 72px;
   z-index: 1000;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 3rem;
+  justify-content: center;
+  padding: 0 2rem;
   background: rgba(10,10,15,0.8);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -78,12 +78,23 @@ header {
   transition: all 0.4s var(--ease);
 }
 
-header.scrolled {
+nav.scrolled {
   background: rgba(10,10,15,0.95);
   box-shadow: 0 4px 30px rgba(0,0,0,0.3);
 }
 
-.logo {
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 1200px;
+  position: relative;
+}
+
+.nav-brand {
+  position: absolute;
+  left: 0;
   font-size: 1.1rem;
   font-weight: 800;
   letter-spacing: 0.2em;
@@ -124,6 +135,26 @@ header.scrolled {
 
 .nav-links a:hover { color: var(--cyan); }
 .nav-links a:hover::after { width: 100%; }
+
+.nav-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(76,201,240,0.2);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--white);
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-left: auto;
+}
+.nav-toggle:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
 
 /* ════════════════════════════════════
    Hero 区域
@@ -851,9 +882,28 @@ footer {
 }
 
 @media (max-width: 768px) {
-  header { padding: 0 1.5rem; }
-  .nav-links { gap: 1.2rem; }
-  .nav-links a { font-size: 0.7rem; }
+  nav { padding: 0 1.5rem; }
+  .nav-inner { justify-content: flex-end; }
+  .nav-links {
+    gap: 0;
+    position: fixed;
+    top: 72px;
+    left: 0; right: 0;
+    flex-direction: column;
+    background: rgba(10,10,15,0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(76,201,240,0.1);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    align-items: center;
+  }
+  .nav-links.open { opacity: 1; pointer-events: all; }
+  .nav-links a { font-size: 0.9rem; padding: 0.8rem 0; width: 100%; text-align: center; }
+  .nav-toggle { display: flex; }
+  /* brand stays absolute left via .nav-brand above, just override for mobile */
   .section { padding: 5rem 1.5rem; }
   .about-grid { grid-template-columns: 1fr; text-align: center; }
   .about-visual { order: -1; }
@@ -885,16 +935,18 @@ footer {
 <body>
 
 <!-- Navigation -->
-<nav>
-  <div class="nav-brand">LOUPENG</div>
-  <div class="nav-links">
-    <a href="#works">作品</a>
-    <a href="#amazon-carousel">亚马逊</a>
-    <a href="#videos">视频渲染</a>
-    <a href="#about">关于</a>
-    <a href="#contact">联系</a>
+<nav id="header">
+  <div class="nav-inner">
+    <div class="nav-brand">LOUPENG</div>
+    <div class="nav-links">
+      <a href="#works">作品</a>
+      <a href="#amazon-carousel">亚马逊</a>
+      <a href="#videos">视频渲染</a>
+      <a href="#about">关于</a>
+      <a href="#contact">联系</a>
+    </div>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
   </div>
-  <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
 </nav>
 
 <!-- Hero -->
